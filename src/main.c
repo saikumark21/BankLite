@@ -26,7 +26,7 @@ int main()
         scanf("%d",&choice);
         switch (choice) {
             case 1:
-                 create_account();
+                create_account();
                 break;
             case 2:
                 // view_account();

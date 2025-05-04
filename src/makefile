@@ -8,4 +8,4 @@ account.o: account.c
 	gcc -c account.c -o account.o
 
 clean:
-	del /Q *.o output.exe
+	rm *.o output.exe
