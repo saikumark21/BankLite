@@ -29,7 +29,7 @@ int main()
                 create_account();
                 break;
             case 2:
-                // view_account();
+                view_account();
                 break;
             case 3:
                 // deposit();

@@ -60,11 +60,11 @@ void create_account(void)
     //Taking user inputs
     printf("Full Name: ");
     fgets(acc.name, sizeof(acc.name), stdin);
-    acc.name[strcspn(acc.name, "\n")] = 0;
+    acc.name[strcspn(acc.name,"\n")] = 0;
 
     printf("Father's name: ");
     fgets(acc.fname, sizeof(acc.fname), stdin);
-    acc.fname[strcspn(acc.fname, "\n")] = 0;
+    acc.fname[strcspn(acc.fname,"\n")] = 0;
 
 GENDER_INPUT:
     printf("Gender(M/F/O): ");
@@ -96,10 +96,16 @@ AMOUNT_DEP:
         goto AMOUNT_DEP; 
     }
 
-    //update_log(acc.id,acc.);
+    time_t now = time(NULL);
+    strftime(acc.created_at,sizeof(acc.created_at),"%Y-%m-%d %H:%M:%S",localtime(&now));
+
+    #ifdef IMPROVE
+    update_log();   //Update transactions in files
+                    // Update the Transaction details of the created user into tansactions log entry
+    #endif
 
     //Saving account details to file
-    fprintf(fp,"%u,%s,%s,%c,%c,%d,%s,%.2f\n",acc.id,acc.name,acc.fname,acc.gender,acc.acc_type,acc.is_active,acc.phone,acc.bal);
+    fprintf(fp,"%u,%s,%s,%c,%c,%d,%s,%.2f,%s\n",acc.id,acc.name,acc.fname,acc.gender,acc.acc_type,acc.is_active,acc.phone,acc.bal,acc.created_at);
 
     printf("Account creation successful. \n");
     
@@ -109,4 +115,51 @@ AMOUNT_DEP:
     #endif
 
     return;
+}
+
+void view_account()
+{
+    Account temp; unsigned int num; FILE *fp; char line[256];
+
+    printf("Enter Account number: ");
+    scanf("%u",&temp.id);
+
+    fp = fopen(ACCOUNT_FILE,"r");
+    if(!fp){
+        printf("Error opening file.... \n");
+        return;
+    }
+    #ifdef DEBUG
+    else printf("File opened successfully....\n");
+    #endif
+
+    while(fgets(line,sizeof(line),fp))
+    {
+        if((sscanf(line,"%d,",&num) == 1) && (temp.id == num))
+        {
+            if (sscanf(line, "%u,%49[^,],%49[^,], %c, %c,%d,%14[^,],%f,%29[^\n]",
+                        &temp.id, temp.name, temp.fname, &temp.gender,
+                        &temp.acc_type, &temp.is_active, temp.phone,
+                        &temp.bal, temp.created_at) == 9)
+                            break;
+            else{
+                    printf("Failed to Load line....\n");
+                }
+            }
+        }
+
+    //Printing the data of the account
+    printf("Name: %s\nFather's name: %s\nGender: %c\nAccount Type: %c\nAccount is Active: %d\nContact Number: %s\nAvailable Balance($): %.2f\nCreated on: %s\n",
+                temp.name,temp.fname,temp.gender,temp.acc_type,
+                temp.is_active,temp.phone,temp.bal,temp.created_at);
+
+    #ifdef IMPROVE
+    Printf("Do you want to print Transactions of the user(y/n):");
+                //Print all the transactions of the user 
+    #endif
+
+    #ifdef DEBUG
+     printf("File closed successfully....\n");
+    #endif
+    fclose(fp);   
 }
