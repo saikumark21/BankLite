@@ -32,10 +32,10 @@ int main()
                 view_account();
                 break;
             case 3:
-                // deposit();
+                deposit();
                 break;
             case 4:
-                // withdraw();
+                // withdrawl();
                 break;
             case 5:
                 // delete_account();

@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include<time.h>
 #include<string.h>
+#include"file_io.h"
 
 unsigned int generate_id(void)
 {
@@ -162,4 +163,39 @@ void view_account()
      printf("File closed successfully....\n");
     #endif
     fclose(fp);   
+}
+
+void deposit()
+{
+    unsigned int id;
+    float amount;
+    Account user;
+
+    printf("Enter Account Number: ");
+    scanf("%u",&id);
+
+    user = find_account_file(id);
+
+    if(user.id == 0)
+    {
+        printf("Account not found....\n");
+        return;
+    }
+    else;
+
+    //#ifdef DEBUG
+    printf("Before deposit,Account Balance: %f\n",user.bal);
+    //#endif
+
+    printf("Enter amount to deposit: ");
+    scanf("%f",&amount);
+
+    user.bal += amount;
+
+    //#ifdef DEBUG
+    printf(" Updated Account Balance: %f\n",user.bal);
+    //#endif
+
+   // update_data(user);
+    return;
 }

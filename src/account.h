@@ -2,7 +2,7 @@
 #define ACCOUNT_H
 
 //#define DEBUG         //Enable if needed to debug code
-//#define IMPROVE
+//#define IMPROVE       //For future improvements
 
 #define NAME_SIZE 40
 #define ACCOUNT_FILE "../data/accounts.txt"
@@ -26,5 +26,6 @@ typedef struct {
 void create_account(void);
 unsigned int generate_id(void);
 void view_account(void);
+void deposit(void);
 
 #endif
