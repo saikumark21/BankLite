@@ -106,7 +106,7 @@ AMOUNT_DEP:
     #endif
 
     //Saving account details to file
-    fprintf(fp,"%u,%s,%s,%c,%c,%d,%s,%.2f,%s\n",acc.id,acc.name,acc.fname,acc.gender,acc.acc_type,acc.is_active,acc.phone,acc.bal,acc.created_at);
+    fprintf(fp,"%04u,%s,%s,%c,%c,%d,%s,%07.2f,%s\n",acc.id,acc.name,acc.fname,acc.gender,acc.acc_type,acc.is_active,acc.phone,acc.bal,acc.created_at);
 
     printf("Account creation successful. \n");
     
@@ -138,7 +138,7 @@ void view_account()
     {
         if((sscanf(line,"%d,",&num) == 1) && (temp.id == num))
         {
-            if (sscanf(line, "%u,%49[^,],%49[^,], %c, %c,%d,%14[^,],%f,%29[^\n]",
+            if (sscanf(line, "%u,%49[^,],%49[^,], %c, %c,%d,%14[^,], %f,%29[^\n]",
                         &temp.id, temp.name, temp.fname, &temp.gender,
                         &temp.acc_type, &temp.is_active, temp.phone,
                         &temp.bal, temp.created_at) == 9)
@@ -183,9 +183,9 @@ void deposit()
     }
     else;
 
-    //#ifdef DEBUG
+    #ifdef DEBUG
     printf("Before deposit,Account Balance: %f\n",user.bal);
-    //#endif
+    #endif
 
     printf("Enter amount to deposit: ");
     scanf("%f",&amount);

@@ -1,4 +1,3 @@
-#include<stdio.h>
 #include"account.h"
 
 void display_menu(void)
@@ -18,12 +17,14 @@ void display_menu(void)
 }
 int main()
 {
-    unsigned int choice = 0;
+    int choice = 0;
 
     while(1)
     {
-        display_menu();
+MENU:   display_menu();
         scanf("%d",&choice);
+        if(!check_num(choice))
+            goto MENU;
         switch (choice) {
             case 1:
                 create_account();

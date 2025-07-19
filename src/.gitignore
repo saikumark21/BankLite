@@ -1,3 +1,6 @@
 # --- C Compiled Files ---
 *.o
 *.exe
+
+#---- Text Files----
+log.txt
